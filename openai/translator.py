@@ -2,7 +2,10 @@ import os
 from dotenv import load_dotenv
 import json
 import time
-import openai
+from openai import OpenAI
+
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OpenAI_API_KEY"))
 
 
 def prepare_batch_input(source_lang, target_lang, texts, filename="batchinput.jsonl"):
@@ -56,13 +59,12 @@ def upload_batch_input(filename):
     Returns:
     - file_id: The ID of the uploaded file, used for creating the batch.
     """
-    openai.api_key = os.getenv("OpenAI_API_KEY")
 
     # Open the file and upload it (Saved in OpenAI server)
     with open(filename, "rb") as f:
-        file = openai.File.create(file=f, purpose="batch")
+        file = client.files.create(file=f, purpose="batch")
 
-    return file["id"]
+    return file.id
 
 
 def create_batch(file_id, completion_window="24h"):
@@ -76,7 +78,7 @@ def create_batch(file_id, completion_window="24h"):
     Returns:
     - batch_id: The ID of the created batch job.
     """
-    batch = openai.Batch.create(
+    batch = client.batches.create(
         input_file_id=file_id,
         endpoint="/v1/chat/completions",
         completion_window=completion_window,
@@ -95,7 +97,7 @@ def check_batch_status(batch_id):
     Returns:
     - batch_status: The status of the batch job.
     """
-    batch = openai.Batches.retrieve(batch_id)
+    batch = client.batches.retrieve(batch_id)
     return batch["status"]
 
 
@@ -110,11 +112,11 @@ def retrieve_batch_results(batch_id):
     - results: The translated sentences.
     """
     # Retrieve output file from the batch job
-    batch = openai.Batches.retrieve(batch_id)
+    batch = client.batches.retrieve(batch_id)
     output_file_id = batch["output_file_id"]
 
     # Download the output file
-    file_response = openai.files.content(output_file_id)
+    file_response = client.files.content(output_file_id)
     file_contents = file_response.text()
 
     # Parse the output from the .jsonl file format
@@ -136,26 +138,23 @@ def cancel_batch(batch_id):
     Returns:
     - batch: The updated batch object after cancellation.
     """
-    batch = openai.Batches.cancel(batch_id)
+    batch = client.batches.cancel(batch_id)
     return batch
 
 
-import time
-
 def main():
-    load_dotenv()
-    
+
     # Multiple lists of strings to translate
     texts_list_1 = [
         "RentByOwner.com offers a comprehensive online platform for travelers seeking the perfect vacation rental experience.",
-        "With a wide selection of properties ranging from cozy holiday homes to luxurious villas, we cater to diverse travel needs and budgets."
+        "With a wide selection of properties ranging from cozy holiday homes to luxurious villas, we cater to diverse travel needs and budgets.",
     ]
-    
+
     texts_list_2 = [
         "Explore beautiful vacation homes across the world with RentByOwner.",
-        "Our platform provides the best deals on villas, apartments, and vacation homes for your next getaway."
+        "Our platform provides the best deals on villas, apartments, and vacation homes for your next getaway.",
     ]
-    
+
     # More lists can be added as needed
     texts_lists = [texts_list_1, texts_list_2]
 
@@ -167,14 +166,16 @@ def main():
     # Step 1: Prepare and upload each batch in a loop
     for texts_to_translate in texts_lists:
         # Prepare the input file for each batch
-        input_filename = prepare_batch_input(source_lang, target_lang, texts_to_translate)
-        
+        input_filename = prepare_batch_input(
+            source_lang, target_lang, texts_to_translate
+        )
+
         # Upload the input file
         file_id = upload_batch_input(input_filename)
-        
+
         # Create the batch job for each batch
         batch_id = create_batch(file_id)
-        
+
         # Store the batch_id for future reference
         batch_ids.append(batch_id)
 
@@ -188,7 +189,9 @@ def main():
                 print(f"Batch {batch_id} is still processing...")
                 all_batches_completed = False  # At least one batch is still processing
         if not all_batches_completed:
-            print("Some batches are still processing. Waiting for a minute before checking again.")
+            print(
+                "Some batches are still processing. Waiting for a minute before checking again."
+            )
             time.sleep(60)  # Check again after a minute
 
     # Step 3: Once all batches are completed, retrieve the results for each batch
