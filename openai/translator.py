@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import json
 import time
 from openai import OpenAI
+from requests.exceptions import RequestException
+from time import sleep
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OpenAI_API_KEY"))
@@ -59,12 +61,13 @@ def upload_batch_input(filename):
     Returns:
     - file_id: The ID of the uploaded file, used for creating the batch.
     """
-
-    # Open the file and upload it (Saved in OpenAI server)
-    with open(filename, "rb") as f:
-        file = client.files.create(file=f, purpose="batch")
-
-    return file.id
+    try:
+        with open(filename, "rb") as f:
+            file = client.files.create(file=f, purpose="batch")
+        return file.id
+    except RequestException as e:
+        print(f"Error uploading file: {e}")
+        return None
 
 
 def create_batch(file_id, completion_window="24h"):
@@ -78,13 +81,16 @@ def create_batch(file_id, completion_window="24h"):
     Returns:
     - batch_id: The ID of the created batch job.
     """
-    batch = client.batches.create(
-        input_file_id=file_id,
-        endpoint="/v1/chat/completions",
-        completion_window=completion_window,
-    )
-
-    return batch["id"]
+    try:
+        batch = client.batches.create(
+            input_file_id=file_id,
+            endpoint="/v1/chat/completions",
+            completion_window=completion_window,
+        )
+        return batch["id"]
+    except RequestException as e:
+        print(f"Error creating batch: {e}")
+        return None
 
 
 def check_batch_status(batch_id):
@@ -97,8 +103,12 @@ def check_batch_status(batch_id):
     Returns:
     - batch_status: The status of the batch job.
     """
-    batch = client.batches.retrieve(batch_id)
-    return batch["status"]
+    try:
+        batch = client.batches.retrieve(batch_id)
+        return batch["status"]
+    except RequestException as e:
+        print(f"Error checking batch status: {e}")
+        return "failed"
 
 
 def retrieve_batch_results(batch_id):
@@ -111,21 +121,24 @@ def retrieve_batch_results(batch_id):
     Returns:
     - results: The translated sentences.
     """
-    # Retrieve output file from the batch job
-    batch = client.batches.retrieve(batch_id)
-    output_file_id = batch["output_file_id"]
+    try:
+        batch = client.batches.retrieve(batch_id)
+        output_file_id = batch["output_file_id"]
 
-    # Download the output file
-    file_response = client.files.content(output_file_id)
-    file_contents = file_response.text()
+        # Download the output file
+        file_response = client.files.content(output_file_id)
+        file_contents = file_response.text()
 
-    # Parse the output from the .jsonl file format
-    results = []
-    for line in file_contents.splitlines():
-        result = json.loads(line)
-        results.append(result["response"]["body"]["choices"][0]["message"]["content"])
+        # Parse the output from the .jsonl file format
+        results = []
+        for line in file_contents.splitlines():
+            result = json.loads(line)
+            results.append(result["response"]["body"]["choices"][0]["message"]["content"])
 
-    return results
+        return results
+    except RequestException as e:
+        print(f"Error retrieving batch results: {e}")
+        return []
 
 
 def cancel_batch(batch_id):
@@ -138,8 +151,12 @@ def cancel_batch(batch_id):
     Returns:
     - batch: The updated batch object after cancellation.
     """
-    batch = client.batches.cancel(batch_id)
-    return batch
+    try:
+        batch = client.batches.cancel(batch_id)
+        return batch
+    except RequestException as e:
+        print(f"Error cancelling batch: {e}")
+        return None
 
 
 def main():
@@ -172,9 +189,15 @@ def main():
 
         # Upload the input file
         file_id = upload_batch_input(input_filename)
+        if not file_id:
+            print("Skipping batch due to upload failure.")
+            continue
 
         # Create the batch job for each batch
         batch_id = create_batch(file_id)
+        if not batch_id:
+            print("Skipping batch due to batch creation failure.")
+            continue
 
         # Store the batch_id for future reference
         batch_ids.append(batch_id)
@@ -197,10 +220,11 @@ def main():
     # Step 3: Once all batches are completed, retrieve the results for each batch
     for batch_id in batch_ids:
         translated_texts = retrieve_batch_results(batch_id)
-        print(f"Results for batch {batch_id}:")
-        for translated_text in translated_texts:
-            print(translated_text)
-        print("\n")  # Add extra line between batch results
+        if translated_texts:
+            print(f"Results for batch {batch_id}:")
+            for translated_text in translated_texts:
+                print(translated_text)
+            print("\n")  # Add extra line between batch results
 
 
 if __name__ == "__main__":
