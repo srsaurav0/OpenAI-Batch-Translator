@@ -4,7 +4,6 @@ import json
 import time
 from openai import OpenAI
 from requests.exceptions import RequestException
-from time import sleep
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OpenAI_API_KEY"))
@@ -133,7 +132,9 @@ def retrieve_batch_results(batch_id):
         results = []
         for line in file_contents.splitlines():
             result = json.loads(line)
-            results.append(result["response"]["body"]["choices"][0]["message"]["content"])
+            results.append(
+                result["response"]["body"]["choices"][0]["message"]["content"]
+            )
 
         return results
     except RequestException as e:
