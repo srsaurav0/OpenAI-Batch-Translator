@@ -1,10 +1,18 @@
-import os
-from dotenv import load_dotenv
 from openai import OpenAI
 from requests.exceptions import RequestException
+import yaml
 
-load_dotenv()
-client = OpenAI(api_key=os.getenv("OpenAI_API_KEY"))
+
+def load_config(file_path="config.yml"):
+    with open(file_path, "r") as file:
+        config = yaml.safe_load(file)
+    return config
+
+
+# Load the configuration
+config = load_config()
+
+client = OpenAI(api_key=config.get("openai_api_key"))
 
 
 """
