@@ -5,7 +5,7 @@ import yaml
 
 
 def load_config(file_path="config.yml"):
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:  # Added utf-8 encoding
         return yaml.safe_load(file)
 
 
@@ -24,14 +24,13 @@ def retrieve_batch_results(batch_id, output_file="batch_output.jsonl"):
         # Save raw output file
         output_id = batch.output_file_id
         file_response = client.files.content(output_id)
-        with open(output_file, "w") as f:
+        with open(output_file, "w", encoding="utf-8") as f:  # Added utf-8 encoding
             f.write(file_response.text)
 
         # Process results
         results = []
-        total_usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
         
-        with open(output_file, "r") as f:
+        with open(output_file, "r", encoding="utf-8") as f:  # Added utf-8 encoding
             for line in f:
                 try:
                     data = json.loads(line)
@@ -60,14 +59,10 @@ def retrieve_batch_results(batch_id, output_file="batch_output.jsonl"):
                         "total_tokens": usage.get("total_tokens", 0)
                     })
 
-                    total_usage["prompt_tokens"] += usage.get("prompt_tokens", 0)
-                    total_usage["completion_tokens"] += usage.get("completion_tokens", 0)
-                    total_usage["total_tokens"] += usage.get("total_tokens", 0)
-
                 except json.JSONDecodeError:
                     print(f"Failed to parse line: {line}")
         
-        return results, total_usage
+        return results
 
     except RequestException as e:
         print(f"Request failed: {e}")

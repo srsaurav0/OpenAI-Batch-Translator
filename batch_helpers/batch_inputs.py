@@ -1,10 +1,10 @@
 def get_text_lists():
     # Multiple lists of strings to translate
-    texts_list_1 = get_inis()
+    texts_list_1 = get_tpls()
 
-    texts_list_2 = get_tpls()
+    texts_list_2 = get_tpls_2()
 
-    texts_list_3 = get_complex_sentences()
+    texts_list_3 = get_tpls_3()
 
     texts_lists = [texts_list_1, texts_list_2, texts_list_3]
 
@@ -267,3 +267,243 @@ def get_complex_sentences():
         "The concert, held in the heart of the city, attracted a diverse crowd, and the energy in the air was palpable as the band took the stage."
     ]
     return sentences
+
+def get_tpls_2():
+    tpls = [
+"""<p>If you're looking for a unique vacation rental in {{.LocationName}}, we've got just the thing.
+    RVs, boats and tree houses are all available through our platform. We have a wide variety of properties
+    to choose from, so you can find the perfect one for your needs. Our vacation rentals are affordable and
+    come with all the amenities you need for a comfortable stay.
+</p>""",
+"""{{if eq .pageLayout "SubLocation:Hotel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/hotels.tpl" .}}
+{{else if eq .pageLayout "SubLocation:VacationRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/vacation_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Cottage"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/cottages.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Cabin"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/cabins.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Villa"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/villas.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Resort"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/resorts.tpl" .}}
+{{else if eq .pageLayout "SubLocation:FamilyRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/family_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:PetFriendly"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/pet_friendly.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Pool"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/rentals_with_pools.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Oceanfront"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/oceanfront.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Beach"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/beach_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:LuxuryRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/luxury_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:DiscountRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/discount_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:BusinessTravel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/business_travel.tpl" .}}
+{{else if eq .pageLayout "SubLocation:ShortTermStay"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/short_term_stays.tpl" .}}
+{{else if eq .pageLayout "SubLocation:SustainableTravel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/sustainable_travel.tpl" .}}
+{{else if eq .pageLayout "SubLocation:SkiChalet"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/ski_chalets.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Timeshare"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/timeshares.tpl" .}}
+{{else if eq .pageLayout "SubLocation:GroupTravel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/group_travel.tpl" .}}
+{{else if eq .pageLayout "SubLocation:WinterRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/winter_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:SummerRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/summer_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:MonthlyStay"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/monthly_stays.tpl" .}}
+{{else if eq .pageLayout "SubLocation:HolidayHomes"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/holiday_homes.tpl" .}}
+{{else if eq .pageLayout "SubLocation:UniqueVacationRentals"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/unique_vacation_rentals.tpl" .}}
+{{else}}
+    {{template "sites/rentbyowner.com/sub_page/lang/vacation_rentals.tpl" .}}
+{{end}}""",
+"""<p>
+    Looking for a beach rental rent near {{.LocationName}}? Rent By Owner features {{if gt .Count 1}}more than {{.Count}}{{end}} beach
+    rentals that are perfect for your next beach holiday. Discover luxury beach rentals that are
+    within walking distance away from {{.LocationName}}. Several of these vacation rentals in {{.LocationName}}
+    are kid-friendly & family-friendly, and are near top local attraction spots, to give guests an
+    unforgettable travel experience. RBO’s rental listings come in all shapes and sizes for large
+    groups, friends, or couples, or wedding retreats in {{.LocationName}}.
+</p>
+<p>
+    Rent By Owner Offers  {{if gt .Count 1}}{{.Count}}{{end}} holiday homes and places to stay in {{.LocationName}}. The site provides
+    unique Airbnb, VRBO, RBO-style accommodations to fit your trip or get away with your friends and family.
+</p>
+<p>
+    RBO beachfront rentals give you the best travel experience that makes it easy to find and book
+    the best place to stay at the best destinations.
+</p>""",
+"""<p>
+    Discover {{if gt .Count 0}}more than {{.Count}}{{else}}the best{{end}} vacation rentals in {{.LocationName}} that are perfect for your next trip.
+    Whether you are traveling with a group, family, friends, or couples retreat in {{.LocationName}},
+    RBO has all types of rental properties with top amenities, including indoor/outdoor/private
+    swimming pools, Wi-Fi, hot tubs, self-catering, and more.
+</p>
+<p>
+    Rent By Owner offers vacation rentals near {{.LocationName}} for all types of travelers,
+    whether you are looking for a luxury home, villa, resort, condo, cabin, cottage, RV rental,
+    or <a href="{{.UrlPrefix}}{{.LocationSlug}}/{{i18n .Lang "__pet_friendly_rentals"}}" class="static-page-link">pet friendly accommodation in {{.LocationName}}</a>.
+    Rent By Owner makes it easy to find and compare vacation rentals, matching you with rental
+    properties from different vacation rental websites. By comparing these rental properties,
+    RBO helps you find the best deals in {{.LocationName}}.{{if and (.StartAtPrice) (gt .StartAtPrice 0.0) (gt .Count 0)}}<a href="{{.UrlPrefix}}{{.LocationSlug}}/{{i18n .Lang "__luxury_rentals"}}" class="static-page-link">
+    Luxury vacation rental</a> prices start from <span id="js-start-price-1">{{.UserCurrency.Symbol}}{{UserPrice .StartAtPrice .UserCurrency.Rate}}</span>
+    per night and affordable condos in {{.LocationName}} start from <span id="js-start-price-2">{{.UserCurrency.Symbol}}{{UserPrice .StartAtPrice .UserCurrency.Rate}}</span> per night.{{end}}
+</p>
+<p>
+    RBO offers a large selection of vacation rentals from top leading sites such as Booking.com,
+    Airbnb, VRBO, Trip.com, RV Share, Outdoorsy, and many more providers. Filter your search
+    dates and discover {{.LocationName}} vacation homes for your next trip.
+</p>""",
+"""<p>
+    {{if gt .Count 1}}With more than {{.Count}}{{else}}Rent By Owner features{{end}} sustainable places to stay in {{.LocationName}}, and with a range of
+    eco-friendly vacation rentals for your sustainable travel, Rent By Owner can help its users
+    make good travel decisions. Whether you are looking for weekly/monthly vacation homes, cabins,
+    villas, cottages, eco-hostels, or luxurious boutique hotels in {{.LocationName}}, there’s definitely
+    something for you.
+</p>
+<p>
+    Rent By Owner offers {{if gt .Count 0}}{{.Count}}{{end}} eco-friendly accommodations with a variety offer price ranges,
+    styles, and top amenities. Some of these amenities include solar heating, greenwater collection,
+    natural gardens, smart thermostats, sustainable furnishings, and more. RBO has covered a wide
+    range of locations, no matter where you are visiting, RBO would make it easy to find and navigate
+    the perfect eco-friendly place to stay that is within your budget.
+</p>
+<p>
+    RBO lists properties as scored by its sister company, <a target="_blank" href="https://www.onedegreeleft.com">OneDegreeLeft</a>, from most- to least
+    eco-friendly. While not every property. We believe that together we can make travel better.
+    Explore eco-friendly travel with family, friends, or colleagues. RBO will try to help ensure
+    your next trip to  {{.LocationName}} is enjoyable and safe for you and the environment. book an
+    eco-friendly place to stay with RBO today!
+</p>"""
+    ]
+    return tpls
+
+def get_tpls_3():
+    tpls = [
+"""<p>
+    {{.LocationName}} is a family-friendly destination with {{if gt .Count 1}}more than {{.Count}}{{else}}top{{end}} places to stay. {{.LocationName}}
+    timeshare rental offers luxury vacation homes while providing comfort for large groups or the
+    entire family. It is difficult to strike a balance between having a luxury timeshare rental and
+    a cost-effective one when searching for yourself. However, with the aid of Rent By Owner,
+    comparing costs, rental locations, available amenities, and closeness to tourist spots in
+    {{.LocationName}} can be done with a few simple clicks.
+</p>
+<p>
+    Apart from having kid-friendly entertainment, local food restaurants, and closeness to vacation
+    spots, Rent By Owner offers plenty of vacation homes in {{.LocationName}} that are within a short drive
+    away. Find your timeshare rental in {{.LocationName}} that includes outdoor pools, hot tubs, dining
+    facilities, WiFi, and furnished luxury rooms at your disposal. There are great places you can
+    visit in {{.LocationName}} with endless opportunities to explore.
+</p>
+<p>
+    Rent By Owner has a large list of timeshare resorts, condos, ski-in/ski-out chalets, and
+    vacation rentals in {{.LocationName}}. Many of these rentals come with fitness centers and playgrounds,
+    spacious bedrooms, kitchen facilities, and other amenities that would make your trip an
+    unforgettable one. Give yourself a big treat by taking a short trip for adventure. During the
+    summer or spring, you will get all timeshare rental in {{.LocationName}} through the RBO website with
+    an updated prices for {{.Year}}. Search and book
+    <a href="{{.UrlPrefix}}{{.LocationSlug}}/{{i18n .Lang "__vacation_rentals"}}" class="static-page-link">vacation rentals in {{.LocationName}}</a>
+    with RBO to reduce
+    costs as well as having a stress-free booking from the comfort of your home.
+</p>""",
+"""<p>
+    We have {{if gt .Count 1}}{{.Count}}{{else}}unique style{{end}} family-friendly rentals in {{.LocationName}}. Looking for the best place to stay in
+    {{.LocationName}} for your family reunion or retreat?
+</p>
+<p>
+    Rent By Owner offers a variety of options of homes with multiple bedrooms and beds  - perfect
+    for large families or groups, and inter-generational travel. Find a place that is good for all
+    ages, even if you have a large family with kids, parents, cousins, aunts, uncles, in-laws,
+    grandma and grandpa, and even the family pet that'll be coming to {{.LocationName}} with you. RBO
+    family rentals have rental properties that would accommodate everyone, saving money vs. a hotel,
+    and giving everyone enough space for relaxation. Smaller or single families are not left out,
+    there’s something special for everyone.
+</p>
+<p>
+    Renting a {{.LocationName}} family vacation rental on Rent By Owner gives you many options to aid you
+    in making the perfect selection for your family holiday. Our {{.LocationName}} house rentals come with
+    all the required amenities you need for planning the perfect family vacation; such as
+    comfortable beds, TVs, spas, bathtubs, balconies, lawns, playrooms, cribs, Wi-Fi, or swimming
+    pools for an unforgettable trip with the entire family and kids.
+</p>
+<p>
+    Rent By Owner offers thousands of rentals.There are many well-equipped cabins,
+    villas, family condos, lodges, and more to accommodate large groups or multiple families. Many
+    of our holiday rentals also have large private pools and allow you to extend your budget.
+</p>""",
+"""<p>Ski-chalets are a popular choice in {{.LocationName}}. At Rent By Owner, we offer {{if gt .Count 1}}more than {{.Count}}{{else}}unique{{end}}
+    ski chalets near {{.LocationName}} to suit your budget and preferences. These chalets are a great option for those looking for a place
+    to stay while enjoying their skiing and snowboarding adventures in the winter, or hiking in the summer.
+    Rent By Owner vacation homes are perfect for families, groups, friends, or wedding retreats, and they come
+    with great amenities.</p>
+<p>
+    Rent By Owner offers several luxury chalets to those who love outdoor travel experiences.
+    The site provides dog-friendly & self-catering ski chalet rentals near {{.LocationName}}, so you can
+    take on all of your adventures with ease, then come back to your rental for more pleasure and comfort.
+</p>
+<p>
+    If you love chalet skiing with patio options or private chalets, there are {{if gt .Count 1}} more than {{.Count}}{{else}}many{{end}}
+    of them available near {{.LocationName}}. Some examples of these chalets include romantic chalets,
+    mountain chalets, catered ski chalets, and self-catering ski chalets. Your vacation gets better
+    as you book your holiday chalet with RBO for your next trip.
+</p>
+
+<p>
+    Rent By Owner has a large list of Airbnb, VRBO, RBO-style ski chalets, holiday rentals, and
+    vacation homes that could be the perfect option for your next trip. Get ready for your next
+    getaway by booking a top-rated chalet in {{.LocationName}} with views of the beautiful scenery & the
+    best activities to engage with. So whether you are looking for a romantic place for the weekend,
+    a spacious chalet for your family or friends, or something for yourself alone, you are one click
+    away from getting all these on Rent By Owner.
+</p>""",
+"""<p>
+    Are you looking for a luxury cabin rental in or near {{.LocationName}}? We have plenty of cabin rentals
+    in {{.LocationName}} that you can book without any hassle, both during winter & summer season.
+    These rentals have luxury bedrooms, as well as other basic amenities to give you optimal comfort.
+    Apart from having the best cabins in {{.LocationName}} for rent, there are lots of things you can do near
+    {{.LocationName}} that would guarantee you have the best travel experience.
+</p>
+<p>
+    Rent By Owner welcomes travelers from different parts of the world, and in all seasons of the year.
+    Rent By Owner ensures you get the best cabin rentals in {{.LocationName}}. Cabins make for a great accommodation
+    option when traveling with family, friends, and large groups, especially in {{.LocationName}}{{ if .GeoInfo.StateAbbr }}, {{.GeoInfo.StateAbbr}}{{ end }}.
+</p>
+<p>
+    Users have the flexibility of comparing {{if gt .Count 1}}{{.Count}}{{end}} beautiful rental cabins in {{.LocationName}} with Rent By Owner.
+    You are just a few clicks away from enjoying large cabins, lakefront cabins, pet-friendly cabins,
+    ski cabins, or a family cabin rental getaway. RBO's large selection of cabins for rent in {{.LocationName}},
+    will ensure we have something right for you.
+</p>""",
+"""<p>
+    Visiting {{.LocationName}} and looking for accommodation? A vacation condo rental is perfect
+    for those visiting and need more flexibility than a hotel. {{if gt .Count 0}}With more than {{.Count}}{{else}}Discover{{end}} condo rentals
+    and holiday apartments in {{.LocationName}} listed on Rent By Owner, we can help you find the best place to stay.
+</p>
+<p>
+    Many of the best vacation  condos in {{.LocationName}} come with top amenities, including
+    swimming pools, fitness centers, Wi-Fi, luxury suites, fully-equipped kitchens, and more.
+    Whatever your budget is, there’s likely a condo that would fit it. Now you can start preparing
+    for your next trip to {{.LocationName}} and book your accommodation in minutes on our website.
+</p>
+<p>
+    RBO vacation condo rentals are the best place for guests to start creating an unforgettable
+    travel experience. Vacation condos are perfect for romantic getaways and weekend retreats.
+    They give you enough space, well-equipped kitchens, and more room to make it feel like home.
+    You can book a place to stay in {{.LocationName}} right now with Rent By Owner and have a whole list
+    of condos to choose from.
+</p>
+<p>
+    Book for a short-stay or long-stay condo for any of your favorite travel destinations.
+    Compare condos, apartments, townhomes, villas and more with Rent By Owner.
+</p>"""
+    ]
+    return tpls
