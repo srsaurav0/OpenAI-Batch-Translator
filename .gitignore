@@ -6,3 +6,5 @@ __pycache__
 *.jsonl
 config.yml
 key
+*.txt
+!results/example.jsonl
