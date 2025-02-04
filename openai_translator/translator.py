@@ -76,17 +76,14 @@ def translator():
                 print(f"Batch {batch_id} is completed. Retrieving results...")
 
                 # Step 3: Once the batch is completed, retrieve and save the results
-                translated_texts, token_usage = retrieve_batch_results(batch_id,f"results/output_{batch_id}.jsonl")
+                translated_texts = retrieve_batch_results(batch_id,f"results/output_{batch_id}.jsonl")
                 if translated_texts:
                     print(f"Results for batch {batch_id}:")
                     # Save the translated texts and token usage to a file
-                    output_filename = f"results/translated_results_batch_{batch_id}.txt"
+                    output_filename = f"results/translated_results_{batch_id}.txt"
                     with open(output_filename, "w") as file:
                         for translated_text in translated_texts:
                             file.write(f"{translated_text}\n")
-                        file.write("\nToken Usage:\n")
-                        for usage in token_usage:
-                            file.write(f"Prompt Tokens: {usage['prompt_tokens']}, Completion Tokens: {usage['completion_tokens']}, Total Tokens: {usage['total_tokens']}\n")
                     print(f"Results for batch {batch_id} saved to {output_filename}")
                 
                 # Remove the batch from the list after it’s processed
