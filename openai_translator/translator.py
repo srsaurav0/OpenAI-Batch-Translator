@@ -1,5 +1,5 @@
 import time
-
+from batch_helpers.batch_inputs import get_text_lists
 from batch_helpers.check_batch_status import check_batch_status
 from batch_helpers.create_batch import create_batch
 from batch_helpers.prepare_batch_input import prepare_batch_input
@@ -32,24 +32,14 @@ None
 
 
 def translator():
-    # Multiple lists of strings to translate
-    texts_list_1 = [
-        "RentByOwner.com offers a comprehensive online platform for travelers seeking the perfect vacation rental experience.",
-        "With a wide selection of properties ranging from cozy holiday homes to luxurious villas, we cater to diverse travel needs and budgets.",
-    ]
 
-    texts_list_2 = [
-        "Explore beautiful vacation homes across the world with RentByOwner.",
-        "Our platform provides the best deals on villas, apartments, and vacation homes for your next getaway.",
-    ]
+    texts_lists = get_text_lists()
 
-    # More lists can be added as needed
-    texts_lists = [texts_list_1, texts_list_2]
-
-    source_lang = "en"  # Language code or language name
-    target_lang = "es"  # Language code or language name
+    source_lang = "English"  # Language code or language name
+    target_lang = "Spanish"  # Language code or language name
 
     batch_ids = []  # Store batch IDs for tracking
+    file_ids = []
 
     # Step 1: Prepare and upload each batch in a loop
     for texts_to_translate in texts_lists:
@@ -63,6 +53,8 @@ def translator():
         if not file_id:
             print("Skipping batch due to upload failure.")
             continue
+        
+        file_ids.append(file_id)
 
         # Create the batch job for each batch
         batch_id = create_batch(file_id)
@@ -72,27 +64,39 @@ def translator():
 
         # Store the batch_id for future reference
         batch_ids.append(batch_id)
+        
+    print("Batch IDs:", batch_ids)
+    print("File IDs:", file_ids)
 
-    # Step 2: Check the status of each batch in a loop
-    all_batches_completed = False
-    while not all_batches_completed:
-        all_batches_completed = True  # Assume all batches are complete, check each
-        for batch_id in batch_ids:
+    # Step 2: Check the status of each batch and handle them individually
+    while batch_ids:
+        for batch_id in batch_ids[:]:  # Iterate over a copy of batch_ids to allow removal
             batch_status = check_batch_status(batch_id)
-            if batch_status != "completed":
-                print(f"Batch {batch_id} is still processing...")
-                all_batches_completed = False  # At least one batch is still processing
-        if not all_batches_completed:
-            print(
-                "Some batches are still processing. Waiting for a minute before checking again."
-            )
-            time.sleep(60)  # Check again after a minute
+            if batch_status == "completed":
+                print(f"Batch {batch_id} is completed. Retrieving results...")
 
-    # Step 3: Once all batches are completed, retrieve the results for each batch
-    for batch_id in batch_ids:
-        translated_texts = retrieve_batch_results(batch_id)
-        if translated_texts:
-            print(f"Results for batch {batch_id}:")
-            for translated_text in translated_texts:
-                print(translated_text)
-            print("\n")  # Add extra line between batch results
+                # Step 3: Once the batch is completed, retrieve and save the results
+                translated_texts, token_usage = retrieve_batch_results(batch_id,f"results/output_{batch_id}.jsonl")
+                if translated_texts:
+                    print(f"Results for batch {batch_id}:")
+                    # Save the translated texts and token usage to a file
+                    output_filename = f"results/translated_results_batch_{batch_id}.txt"
+                    with open(output_filename, "w") as file:
+                        for translated_text in translated_texts:
+                            file.write(f"{translated_text}\n")
+                        file.write("\nToken Usage:\n")
+                        for usage in token_usage:
+                            file.write(f"Prompt Tokens: {usage['prompt_tokens']}, Completion Tokens: {usage['completion_tokens']}, Total Tokens: {usage['total_tokens']}\n")
+                    print(f"Results for batch {batch_id} saved to {output_filename}")
+                
+                # Remove the batch from the list after it’s processed
+                batch_ids.remove(batch_id)
+
+            else:
+                print(f"Batch {batch_id} is still processing. Checking again in 1 minute.")
+        
+        # Wait before checking the status again for remaining batches
+        if batch_ids:  # If there are still batches left to check
+            time.sleep(60)  # Wait for a short period before checking again
+        else:
+            print("All batches are completed.")
