@@ -32,6 +32,7 @@ def upload_batch_input(filename):
         with open(filename, "rb") as f:
             file = client.files.create(file=f, purpose="batch")
         return file.id
+
     except RequestException as e:
         print(f"Error uploading file: {e}")
         return None

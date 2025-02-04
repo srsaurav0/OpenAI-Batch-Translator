@@ -30,7 +30,8 @@ def check_batch_status(batch_id):
 
     try:
         batch = client.batches.retrieve(batch_id)
-        return batch["status"]
+        return batch.status
+
     except RequestException as e:
         print(f"Error checking batch status: {e}")
         return "failed"

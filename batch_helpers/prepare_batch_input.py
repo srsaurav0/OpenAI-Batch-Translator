@@ -24,7 +24,7 @@ def prepare_batch_input(source_lang, target_lang, texts, filename="batchinput.js
                 "method": "POST",
                 "url": "/v1/chat/completions",
                 "body": {
-                    "model": "gpt-3.5-turbo",  # Choose appropriate model
+                    "model": "gpt-4o-mini",  
                     "messages": [
                         {
                             "role": "system",
@@ -33,7 +33,8 @@ def prepare_batch_input(source_lang, target_lang, texts, filename="batchinput.js
                             "Keep all templates intact. \n"
                             "Translate only the visible text between the tags. \n"
                             'Do not change the string "Rent By Owner™" or "Rent by Owner". \n'
-                            "Only output the translated sentence.",
+                            "Do not include any extra new line characters ('\\n') or whitespace. \n"
+                            "Ensure that the original formatting, including indentation and line breaks, is preserved in the output."
                         },
                         {"role": "user", "content": text},
                     ],

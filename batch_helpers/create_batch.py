@@ -28,14 +28,16 @@ Returns:
 
 
 def create_batch(file_id, completion_window="24h"):
-
     try:
         batch = client.batches.create(
             input_file_id=file_id,
             endpoint="/v1/chat/completions",
             completion_window=completion_window,
         )
-        return batch["id"]
+        # Access the 'id' attribute of the Batch object
+        return batch.id
+
     except RequestException as e:
         print(f"Error creating batch: {e}")
         return None
+
