@@ -37,7 +37,7 @@ def translator():
     texts_lists = get_text_lists()
 
     source_lang = "English"  # Language code or language name
-    target_lang = "Spanish"  # Language code or language name
+    target_lang = "French"  # Language code or language name
 
     batch_ids = []  # Store batch IDs for tracking
     file_ids = []
@@ -103,8 +103,9 @@ def translator():
                         for translated_text in translated_texts:
                             file.write(f"{translated_text}\n")
                     print(f"Results for batch {batch_id} saved to {output_filename}")
-                    content_list = extract_content_from_file(output_filename, batch_id)
-                    print(content_list)
+                    extract_content_from_file(output_filename, batch_id)
+                    # content_list = extract_content_from_file(output_filename, batch_id)
+                    # print(content_list)
 
                 batch_ids.remove(batch_id)
 
