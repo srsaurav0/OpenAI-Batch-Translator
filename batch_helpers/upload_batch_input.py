@@ -31,6 +31,7 @@ def upload_batch_input(filename):
     try:
         with open(filename, "rb") as f:
             file = client.files.create(file=f, purpose="batch")
+            print(file)
         return file.id
 
     except RequestException as e:

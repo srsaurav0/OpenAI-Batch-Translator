@@ -32,8 +32,8 @@ def prepare_batch_input(source_lang, target_lang, texts, filename="batchinput.js
                             "Keep all HTML tags, attributes, and links intact. \n"
                             "Keep all templates intact. \n"
                             "Translate only the visible text between the tags. \n"
-                            'Do not change the string "Rent By Owner™" or "Rent by Owner". \n'
-                            "Do not include any extra new line characters ('\\n') or whitespace. \n"
+                            "Preserve the exact text of 'Rent By Owner™' and 'Rent by Owner' without translation or modification.\n"
+                            "Preserve original spacing and line breaks without adding or removing any. \n"
                             "Ensure that the original formatting, including indentation and line breaks, is preserved in the output."
                         },
                         {"role": "user", "content": text},

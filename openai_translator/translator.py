@@ -53,7 +53,7 @@ def translator():
         if not file_id:
             print("Skipping batch due to upload failure.")
             continue
-        
+
         file_ids.append(file_id)
 
         # Create the batch job for each batch
@@ -64,34 +64,67 @@ def translator():
 
         # Store the batch_id for future reference
         batch_ids.append(batch_id)
-        
+
     print("Batch IDs:", batch_ids)
     print("File IDs:", file_ids)
 
     # Step 2: Check the status of each batch and handle them individually
     while batch_ids:
-        for batch_id in batch_ids[:]:  # Iterate over a copy of batch_ids to allow removal
+        for batch_id in batch_ids[
+            :
+        ]:  # Iterate over a copy of batch_ids to allow removal
             batch_status = check_batch_status(batch_id)
-            if batch_status == "completed":
-                print(f"Batch {batch_id} is completed. Retrieving results...")
 
-                # Step 3: Once the batch is completed, retrieve and save the results
-                translated_texts = retrieve_batch_results(batch_id,f"results/output_{batch_id}.jsonl")
+            if batch_status == "validating":
+                print(f"Batch {batch_id} is being validated. Waiting...")
+
+            elif batch_status == "failed":
+                print(f"Batch {batch_id} failed validation. Removing from list.")
+                batch_ids.remove(batch_id)
+
+            elif batch_status == "in_progress":
+                print(
+                    f"Batch {batch_id} is currently being processed. Checking again later."
+                )
+
+            elif batch_status == "finalizing":
+                print(f"Batch {batch_id} has completed and results are being prepared.")
+
+            elif batch_status == "completed":
+                print(f"Batch {batch_id} is completed. Retrieving results...")
+                translated_texts = retrieve_batch_results(
+                    batch_id, f"results/output_{batch_id}.jsonl"
+                )
+
                 if translated_texts:
-                    print(f"Results for batch {batch_id}:")
-                    # Save the translated texts and token usage to a file
                     output_filename = f"results/translated_results_{batch_id}.txt"
                     with open(output_filename, "w") as file:
                         for translated_text in translated_texts:
                             file.write(f"{translated_text}\n")
                     print(f"Results for batch {batch_id} saved to {output_filename}")
-                
-                # Remove the batch from the list after it’s processed
+
+                batch_ids.remove(batch_id)
+
+            elif batch_status == "expired":
+                print(
+                    f"Batch {batch_id} expired. It was not completed within 24 hours. Removing from list."
+                )
+                batch_ids.remove(batch_id)
+
+            elif batch_status == "cancelling":
+                print(
+                    f"Batch {batch_id} is being cancelled. Waiting for confirmation..."
+                )
+
+            elif batch_status == "cancelled":
+                print(f"Batch {batch_id} was cancelled. Removing from list.")
                 batch_ids.remove(batch_id)
 
             else:
-                print(f"Batch {batch_id} is still processing. Checking again in 1 minute.")
-        
+                print(
+                    f"Batch {batch_id} has an unknown status: {batch_status}. Investigating..."
+                )
+
         # Wait before checking the status again for remaining batches
         if batch_ids:  # If there are still batches left to check
             time.sleep(60)  # Wait for a short period before checking again
