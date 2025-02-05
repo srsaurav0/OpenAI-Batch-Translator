@@ -29,7 +29,7 @@ def retrieve_batch_results(batch_id, output_file="batch_output.jsonl"):
 
         # Process results
         results = []
-        
+
         with open(output_file, "r", encoding="utf-8") as f:  # Added utf-8 encoding
             for line in f:
                 try:
@@ -40,7 +40,9 @@ def retrieve_batch_results(batch_id, output_file="batch_output.jsonl"):
 
                     # Skip errored entries (shouldn't be in output file normally)
                     if error is not None or response.get("status_code") != 200:
-                        print(f"Skipping invalid entry (custom_id: {custom_id}): {error}")
+                        print(
+                            f"Skipping invalid entry (custom_id: {custom_id}): {error}"
+                        )
                         continue
 
                     # Extract content
@@ -51,17 +53,19 @@ def retrieve_batch_results(batch_id, output_file="batch_output.jsonl"):
 
                     # Extract usage and accumulate totals
                     usage = body.get("usage", {})
-                    results.append({
-                        "custom_id": custom_id,
-                        "content": content,
-                        "prompt_tokens": usage.get("prompt_tokens", 0),
-                        "completion_tokens": usage.get("completion_tokens", 0),
-                        "total_tokens": usage.get("total_tokens", 0)
-                    })
+                    results.append(
+                        {
+                            "custom_id": custom_id,
+                            "content": content,
+                            "prompt_tokens": usage.get("prompt_tokens", 0),
+                            "completion_tokens": usage.get("completion_tokens", 0),
+                            "total_tokens": usage.get("total_tokens", 0),
+                        }
+                    )
 
                 except json.JSONDecodeError:
                     print(f"Failed to parse line: {line}")
-        
+
         return results
 
     except RequestException as e:
