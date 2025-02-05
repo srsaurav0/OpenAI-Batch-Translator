@@ -1,12 +1,12 @@
 def get_text_lists():
     # Multiple lists of strings to translate
-    texts_list_1 = get_tpls()
+    texts_list_1 = get_tpls_4()
 
-    texts_list_2 = get_tpls_2()
+    # texts_list_2 = get_tpls_5()
 
-    texts_list_3 = get_tpls_3()
+    # texts_list_3 = get_tpls_6()
 
-    texts_lists = [texts_list_1, texts_list_2, texts_list_3]
+    texts_lists = [texts_list_1, texts_list_1, texts_list_1]
 
     return texts_lists
 
@@ -506,4 +506,81 @@ def get_tpls_3():
     Compare condos, apartments, townhomes, villas and more with Rent By Owner.
 </p>"""
     ]
+    return tpls
+
+def get_tpls_4():
+    tpls = {
+"key_1":"""<p>If you're looking for a unique vacation rental in {{.LocationName}}, we've got just the thing.
+    RVs, boats and tree houses are all available through our platform. We have a wide variety of properties
+    to choose from, so you can find the perfect one for your needs. Our vacation rentals are affordable and
+    come with all the amenities you need for a comfortable stay.
+</p>""",
+"key_2":"""{{if eq .pageLayout "SubLocation:Hotel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/hotels.tpl" .}}
+{{else if eq .pageLayout "SubLocation:VacationRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/vacation_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Cottage"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/cottages.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Cabin"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/cabins.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Villa"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/villas.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Resort"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/resorts.tpl" .}}
+{{else if eq .pageLayout "SubLocation:FamilyRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/family_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:PetFriendly"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/pet_friendly.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Pool"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/rentals_with_pools.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Oceanfront"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/oceanfront.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Beach"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/beach_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:LuxuryRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/luxury_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:DiscountRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/discount_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:BusinessTravel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/business_travel.tpl" .}}
+{{else if eq .pageLayout "SubLocation:ShortTermStay"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/short_term_stays.tpl" .}}
+{{else if eq .pageLayout "SubLocation:SustainableTravel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/sustainable_travel.tpl" .}}
+{{else if eq .pageLayout "SubLocation:SkiChalet"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/ski_chalets.tpl" .}}
+{{else if eq .pageLayout "SubLocation:Timeshare"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/timeshares.tpl" .}}
+{{else if eq .pageLayout "SubLocation:GroupTravel"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/group_travel.tpl" .}}
+{{else if eq .pageLayout "SubLocation:WinterRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/winter_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:SummerRental"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/summer_rentals.tpl" .}}
+{{else if eq .pageLayout "SubLocation:MonthlyStay"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/monthly_stays.tpl" .}}
+{{else if eq .pageLayout "SubLocation:HolidayHomes"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/holiday_homes.tpl" .}}
+{{else if eq .pageLayout "SubLocation:UniqueVacationRentals"}}
+    {{template "sites/rentbyowner.com/sub_page/lang/unique_vacation_rentals.tpl" .}}
+{{else}}
+    {{template "sites/rentbyowner.com/sub_page/lang/vacation_rentals.tpl" .}}
+{{end}}""",
+"key_3":"""<p>
+    Looking for a beach rental rent near {{.LocationName}}? Rent By Owner features {{if gt .Count 1}}more than {{.Count}}{{end}} beach
+    rentals that are perfect for your next beach holiday. Discover luxury beach rentals that are
+    within walking distance away from {{.LocationName}}. Several of these vacation rentals in {{.LocationName}}
+    are kid-friendly & family-friendly, and are near top local attraction spots, to give guests an
+    unforgettable travel experience. RBO’s rental listings come in all shapes and sizes for large
+    groups, friends, or couples, or wedding retreats in {{.LocationName}}.
+</p>
+<p>
+    Rent By Owner Offers  {{if gt .Count 1}}{{.Count}}{{end}} holiday homes and places to stay in {{.LocationName}}. The site provides
+    unique Airbnb, VRBO, RBO-style accommodations to fit your trip or get away with your friends and family.
+</p>
+<p>
+    RBO beachfront rentals give you the best travel experience that makes it easy to find and book
+    the best place to stay at the best destinations.
+</p>""",
+    }
     return tpls

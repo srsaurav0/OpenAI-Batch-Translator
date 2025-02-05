@@ -15,12 +15,13 @@ Returns:
 """
 
 
-def prepare_batch_input(source_lang, target_lang, texts, filename="batchinput.jsonl"):
-
+def prepare_batch_input(source_lang, target_lang, texts, filename="inputs/batchinput.jsonl"):
+    filename = f"inputs/{next(iter(texts))}.jsonl"
     with open(filename, "w", encoding="utf-8") as f:
-        for idx, text in enumerate(texts):
+        for key, value in texts.items():
             request = {
-                "custom_id": f"request-{idx}",
+                "custom_id": f"rentbyowner.com-{key}",
+                # rentbyowner.com-{key}
                 "method": "POST",
                 "url": "/v1/chat/completions",
                 "body": {
@@ -36,7 +37,7 @@ def prepare_batch_input(source_lang, target_lang, texts, filename="batchinput.js
                             "Preserve original spacing and line breaks without adding or removing any. \n"
                             "Ensure that the original formatting, including indentation and line breaks, is preserved in the output."
                         },
-                        {"role": "user", "content": text},
+                        {"role": "user", "content": value},
                     ],
                     "max_tokens": 5000,  # Adjust based on expected sentence length
                 },
