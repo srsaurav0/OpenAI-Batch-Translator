@@ -35,13 +35,13 @@ pip install -r requirements.txt
 ```
 
 ### **Update API Key**
-Create a .env file:
+Create a **config.yml** file at root:
 ```
-touch .env
+touch config.yml
 ```
-Copy content from `.env.example` and update the `OpenAI_API_KEY`.
+Copy content from `config.yml.example` and update the `OpenAI_API_KEY`.
 
 ### **Run Project**
 ```
-python3 ./openai/translator.py
+python3 main.py
 ```
