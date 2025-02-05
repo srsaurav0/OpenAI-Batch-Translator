@@ -1,12 +1,12 @@
 def get_text_lists():
     # Multiple lists of strings to translate
-    texts_list_1 = get_tpls_4()
+    texts_list_1 = get_tpls_5()
 
     # texts_list_2 = get_tpls_5()
 
     # texts_list_3 = get_tpls_6()
 
-    texts_lists = [texts_list_1, texts_list_1, texts_list_1]
+    texts_lists = [texts_list_1]
 
     return texts_lists
 
@@ -582,5 +582,316 @@ def get_tpls_4():
     RBO beachfront rentals give you the best travel experience that makes it easy to find and book
     the best place to stay at the best destinations.
 </p>""",
+    }
+    return tpls
+
+def get_tpls_5():
+    tpls = {
+"key_1":"""{{template "common/redirect/redirect.tpl" .}}
+
+{{define "site_common_preload"}}
+    <link rel="preload" href="{{.staticFileUrl}}/static/fonts/Muli_Webfont.woff2" as="font" type="font/woff2" crossorigin>
+{{end}}
+
+{{define "site_css"}}
+    <link rel="stylesheet" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/variables.css"/>
+    <link rel="stylesheet" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/global.css"/>
+    <link rel="stylesheet" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/pages/redirect.css"/>
+{{end}}
+
+{{define "site_preload"}}
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/variables.css" as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/global.css" as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/pages/redirect.css" as="style"/>
+{{end}}
+
+{{define "site_header_logo_redirect"}}
+    <a href="/" class="align-item-center">
+        <img src="{{.staticFileUrl}}/static/images/sites/rentbyowner.com/header_logo.svg" alt="{{i18n .Lang "brand"}}" width="182" height="26">
+    </a>
+{{end}}
+
+{{define "site_redirect_container_logo"}}
+    <div class="box logo-area">
+        <img src="{{.staticFileUrl}}/static/images/sites/rentbyowner.com/logo_footer.svg" alt="{{i18n .Lang "brand"}}" width="182" height="26" />
+    </div>
+{{end}}""",
+"key_2":"""{{template "sites/rentbyowner.com/layouts/main.tpl" .}}
+{{template "common/details/published_details.tpl" .}}
+
+{{define  "site_css_vars"}}
+    <style>
+        :root {
+            /* Site 'Details' css image variable start*/
+            --site-common-details-bottom-links-bullet: url({{.staticFileUrl}}/static/images/sites/rentbyowner.com/check.svg);
+        }
+    </style>
+{{end}}
+
+{{define "site_css"}}
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/variables.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/global.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/calendar.css"/>
+    <link rel="stylesheet" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/tiles.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/pages/details.css"/>
+{{end}}
+
+{{define "site_preload"}}
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/variables.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/global.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/calendar.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/tiles.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/pages/details.css"
+          as="style"/>
+{{end}}
+
+{{define "site_details_popup_header"}}
+    <img class="max-w-full nav-row-logo" loading="lazy"
+         src="{{.staticFileUrl}}/static/images/sites/rentbyowner.com/header_logo.svg" alt="{{i18n .Lang "brand"}}"
+         width="182"
+         height="26">
+{{end}}
+
+{{define "details_breadcrumb"}}
+    {{template "common/details/partials/details_breadcrumb.tpl" .}}
+{{end}}
+
+{{define "map_area_description"}}
+    {{template "common/details/partials/details_area_description_map.tpl" .}}
+{{end}}
+
+{{define "seo_room_arragment_faq"}}
+    {{template "common/details/partials/details_seo_room_arragment_faq.tpl" .}}
+{{end}}
+
+{{define "map"}}
+    {{template "common/details/partials/details_map.tpl" .}}
+{{end}}
+
+{{define "details_faq"}}
+    {{template "common/details/partials/faq.tpl" .}}
+{{end}}
+
+{{define "details_mobile_review"}}
+    {{template "common/details/partials/details_mobile_reviews.tpl" .}}
+{{end}}
+
+<!-- Bedroom footer content start -->
+{{define "site_bedroom_footer_content"}}
+    <div class="bedroom-footer-content">
+        <div class="bedroom-footer text-white" id="js-seo-block">
+            <div class="max-container">
+                <div class="container-fluid">
+                    <h3 class="bedroom-footer-title font-20 no-margin pb-16 underlined-title">
+                        Why is Rent By Owner {{.LocationName}} Your Choice for Vacation Rentals
+                    </h3>
+                    <div class="color-accent">
+                        <p>Find your dream vacation rental on Rent By Owner, where
+                            adventure meets comfort in every corner. RentByOwner features a broad mix of accommodations,
+                            from charming country cottages and chic city apartments to tranquil beachfront villas and
+                            cozy mountain cabins. Whether you're yearning for a delightful bungalow by the bay, a grand
+                            estate over the dock, or a snug lodge in a quaint village, we've got the perfect spot for
+                            you.</p>
+                        <div class="{{if eq .UserInfo.Platform "mobile"}}hidden{{else}}visible{{end}}" id="js-seo-text-section">
+                            <p>Prepare to unleash your inner explorer with our unique lodgings, including floating
+                                houses, whimsical treehouses, and picturesque farmhouses, or stick to the classics with
+                                duplexes, flats, and guesthouses. Choose the simplicity of a studio or the luxury of a
+                                suite. For outdoor enthusiasts, we offer tents in hidden campsites, RVs, mountain
+                                cabins, boat rentals, chalets in snowy havens, and caravans in lush gardens. Rent By
+                                Owner truly has something for everyone.</p>
+                            <p>Every holiday rental, from a humble hut to a lavish resort, guarantees a memorable stay
+                                with cozy beds, functional kitchens, and welcoming living areas. Ideal for families,
+                                couples, or solo adventurers, our rentals are more than just a place to sleep—they're
+                                your home away from home. Book your next vacation with us and embark on a unique retreat
+                                crafted for relaxation and adventure. We also offer annexes for added privacy, designer
+                                lofts for a modern touch, and motels for quick stays. Explore beachside bungalows,
+                                countryside ranches, and urban condos. Find your perfect getaway, whether it’s a quiet
+                                den in the forest or a bustling inn by the island. At RentByOwner, our properties
+                                include everything from houseboats and barns to court-style quarters and garden
+                                retreats.</p>
+                            <p>To make your booking experience even more convenient, we help you compare prices and
+                                inventory so you can find and book your vacation rental on popular platforms like
+                                Airbnb, Expedia, Vrbo (previously HomeAway), TripAdvisor (FlipKey), Booking.com, and
+                                HomeToGo. We work with these trusted sites to offer you a seamless booking process,
+                                ensuring that your perfect vacation rental is just a few clicks away.</p>
+                        </div>
+                    </div>
+                    <div class="read-more-less {{if eq .UserInfo.Platform "mobile"}}visible{{else}}hidden{{end}}">
+                        <div class="read-more cursor-pointer" id="js-seo-read-more">
+                            <span class="text-white">{{i18n .Lang "__show_more"}}</span>
+                            <svg class="icon text-white">
+                                <use xlink:href="#chevron-down-solid"></use>
+                            </svg>
+                        </div>
+                        <div class="read-less read-more-container cursor-pointer hidden" id="js-seo-read-less">
+                            <span class="text-white">{{i18n .Lang "show_less"}}</span>
+                            <svg class="icon text-white">
+                                <use xlink:href="#chevron-down-solid"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}
+<!-- Bedroom footer content start -->
+""",
+"key_3":"""{{ if gt .Count 1}}
+    <p>With more than {{.LessCount}} {{.LocationName}} vacation rentals, we can help you find a place to stay. These rentals, including vacation rentals, Rent By Owner Homes (RBOs) and other short-term private accommodations,
+        have top-notch amenities with the best value, providing you with comfort and luxury at the same time. Get more value and more room when you stay at an RBO property in  <span>{{.LocationName}}</span>.</p>
+{{ end }}
+<p>
+    Looking for last-minute deals, or finding the best deals available for cottages, condos, private villas, and large vacation
+    homes? With RentByOwner <span>{{.LocationName}}</span>, you have the flexibility of comparing different options of various
+    deals with a single click. Looking for an RBO with the best swimming pools, hot tubs, allows pets, or even those with
+    huge master suite bedrooms and have large screen televisions? You can find vacation rentals by owner (RBOs), and other
+    popular Airbnb-style properties in <span>{{.LocationName}}</span>. Places to stay near <span>{{.LocationName}}</span>
+    {{ if gt .AverageRoomSize 0.0 }}
+        are<span> {{.AverageRoomSize}} ft²</span> on average,
+    {{ end }}
+    {{ if gt .AveragePrice 0.0 }}
+        with prices averaging <span id="js-average-price">{{.UserCurrency.Symbol}}{{UserPrice .AveragePrice .UserCurrency.Rate}}</span> a night.
+    {{ end }}
+</p>
+<p>RentByOwner makes it easy and safe to find and compare vacation rentals in <span>{{.LocationName}}</span> with prices often at a 30-40% discount versus the price of a hotel. Just search for your destination and secure your reservation today.</p>""",
+"key_4":"""RentByOwner makes it easy to compare the best listings on RBO homes from online vacation rental OTAs, including Booking.com and more. Use the Advanced Filter feature at the top to easily flip between RBO homes, vacation rentals, bed and breakfasts, private Airbnb-style rentals availability, eco-friendly properties, property type, cancellation policies, prices, and several different options. All these make it easier to find the perfect accommodation for your next vacation in {{.LocationName}}.""",
+"key_5":"""{{template "sites/rentbyowner.com/layouts/main.tpl" .}}
+{{template "common/details/published_details.tpl" .}}
+
+{{define  "site_css_vars"}}
+    <style>
+        :root {
+            /* Site 'Details' css image variable start*/
+            --site-common-details-bottom-links-bullet: url({{.staticFileUrl}}/static/images/sites/rentbyowner.com/check.svg);
+        }
+    </style>
+{{end}}
+
+{{define "site_css"}}
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/variables.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/global.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/calendar.css"/>
+    <link rel="stylesheet" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/tiles.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/pages/details.css"/>
+{{end}}
+
+{{define "site_preload"}}
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/variables.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/global.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/calendar.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/common/tiles.css"
+          as="style"/>
+    <link rel="preload" type="text/css" href="{{.staticFileUrl}}/static/css/sites/rentbyowner.com/pages/details.css"
+          as="style"/>
+{{end}}
+
+{{define "site_details_popup_header"}}
+    <img class="max-w-full nav-row-logo" loading="lazy"
+         src="{{.staticFileUrl}}/static/images/sites/rentbyowner.com/header_logo.svg" alt="{{i18n .Lang "brand"}}"
+         width="182"
+         height="26">
+{{end}}
+
+{{define "details_breadcrumb"}}
+    {{template "common/details/partials/details_breadcrumb.tpl" .}}
+{{end}}
+
+{{define "map_area_description"}}
+    {{template "common/details/partials/details_area_description_map.tpl" .}}
+{{end}}
+
+{{define "seo_room_arragment_faq"}}
+    {{template "common/details/partials/details_seo_room_arragment_faq.tpl" .}}
+{{end}}
+
+{{define "map"}}
+    {{template "common/details/partials/details_map.tpl" .}}
+{{end}}
+
+{{define "details_faq"}}
+    {{template "common/details/partials/faq.tpl" .}}
+{{end}}
+
+{{define "details_mobile_review"}}
+    {{template "common/details/partials/details_mobile_reviews.tpl" .}}
+{{end}}
+
+<!-- Bedroom footer content start -->
+{{define "site_bedroom_footer_content"}}
+    <div class="bedroom-footer-content">
+        <div class="bedroom-footer text-white" id="js-seo-block">
+            <div class="max-container">
+                <div class="container-fluid">
+                    <h3 class="bedroom-footer-title font-20 no-margin pb-16 underlined-title">
+                        Why is Rent By Owner {{.LocationName}} Your Choice for Vacation Rentals
+                    </h3>
+                    <div class="color-accent">
+                        <p>Find your dream vacation rental on Rent By Owner, where
+                            adventure meets comfort in every corner. RentByOwner features a broad mix of accommodations,
+                            from charming country cottages and chic city apartments to tranquil beachfront villas and
+                            cozy mountain cabins. Whether you're yearning for a delightful bungalow by the bay, a grand
+                            estate over the dock, or a snug lodge in a quaint village, we've got the perfect spot for
+                            you.</p>
+                        <div class="{{if eq .UserInfo.Platform "mobile"}}hidden{{else}}visible{{end}}" id="js-seo-text-section">
+                            <p>Prepare to unleash your inner explorer with our unique lodgings, including floating
+                                houses, whimsical treehouses, and picturesque farmhouses, or stick to the classics with
+                                duplexes, flats, and guesthouses. Choose the simplicity of a studio or the luxury of a
+                                suite. For outdoor enthusiasts, we offer tents in hidden campsites, RVs, mountain
+                                cabins, boat rentals, chalets in snowy havens, and caravans in lush gardens. Rent By
+                                Owner truly has something for everyone.</p>
+                            <p>Every holiday rental, from a humble hut to a lavish resort, guarantees a memorable stay
+                                with cozy beds, functional kitchens, and welcoming living areas. Ideal for families,
+                                couples, or solo adventurers, our rentals are more than just a place to sleep—they're
+                                your home away from home. Book your next vacation with us and embark on a unique retreat
+                                crafted for relaxation and adventure. We also offer annexes for added privacy, designer
+                                lofts for a modern touch, and motels for quick stays. Explore beachside bungalows,
+                                countryside ranches, and urban condos. Find your perfect getaway, whether it’s a quiet
+                                den in the forest or a bustling inn by the island. At RentByOwner, our properties
+                                include everything from houseboats and barns to court-style quarters and garden
+                                retreats.</p>
+                            <p>To make your booking experience even more convenient, we help you compare prices and
+                                inventory so you can find and book your vacation rental on popular platforms like
+                                Airbnb, Expedia, Vrbo (previously HomeAway), TripAdvisor (FlipKey), Booking.com, and
+                                HomeToGo. We work with these trusted sites to offer you a seamless booking process,
+                                ensuring that your perfect vacation rental is just a few clicks away.</p>
+                        </div>
+                    </div>
+                    <div class="read-more-less {{if eq .UserInfo.Platform "mobile"}}visible{{else}}hidden{{end}}">
+                        <div class="read-more cursor-pointer" id="js-seo-read-more">
+                            <span class="text-white">{{i18n .Lang "__show_more"}}</span>
+                            <svg class="icon text-white">
+                                <use xlink:href="#chevron-down-solid"></use>
+                            </svg>
+                        </div>
+                        <div class="read-less read-more-container cursor-pointer hidden" id="js-seo-read-less">
+                            <span class="text-white">{{i18n .Lang "show_less"}}</span>
+                            <svg class="icon text-white">
+                                <use xlink:href="#chevron-down-solid"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}
+<!-- Bedroom footer content start -->
+"""
     }
     return tpls
