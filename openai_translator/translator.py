@@ -2,6 +2,7 @@ import time
 from batch_helpers.batch_inputs import get_text_lists
 from batch_helpers.check_batch_status import check_batch_status
 from batch_helpers.create_batch import create_batch
+from batch_helpers.extract_content import extract_content_from_file
 from batch_helpers.prepare_batch_input import prepare_batch_input
 from batch_helpers.retrieve_batch_results import retrieve_batch_results
 from batch_helpers.upload_batch_input import upload_batch_input
@@ -102,6 +103,8 @@ def translator():
                         for translated_text in translated_texts:
                             file.write(f"{translated_text}\n")
                     print(f"Results for batch {batch_id} saved to {output_filename}")
+                    content_list = extract_content_from_file(output_filename, batch_id)
+                    print(content_list)
 
                 batch_ids.remove(batch_id)
 
