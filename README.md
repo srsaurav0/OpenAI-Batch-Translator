@@ -41,6 +41,9 @@ touch config.yml
 ```
 Copy content from `config.yml.example` and update the `OpenAI_API_KEY`.
 
+### **Prepare Input**
+Insert input in dictionary (key-value) format inside ***batch_helpers/batch_inputs.py*** file. It returns a list of dictionaries as input to the main translator.
+
 ### **Run Project**
 ```
 python3 main.py
@@ -113,7 +116,7 @@ Open contents in ***results/list*** to access the results. The results are saved
     ```
 3.  Preserving new lines and indentation in output (Fixed)
 
-    Output `content` field in ***.jsonl*** file converted to text with utf-8 encoding.
+    The `content` field in output ***.jsonl*** file is saved to ***.txt*** file with **utf-8** encoding.
 
     Previous output content:
     ```html
