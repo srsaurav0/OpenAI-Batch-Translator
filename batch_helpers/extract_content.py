@@ -34,5 +34,8 @@ def extract_content_from_file(file_path, batch_id):
                         file.write(content)  # Save as plain text
 
                     print(f"Extracted content saved to {output_filename}")
+
+            
+                
     except Exception as e:
         print(f"Error reading file {file_path}: {e}")
