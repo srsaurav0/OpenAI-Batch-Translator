@@ -6,11 +6,11 @@ This project uses the **OpenAI Batch API** to translate a list of sentences from
 
 ## Workflow Overview
 
-1. **Prepare Input Data**: The script takes a list of texts and creates a `.jsonl` file. Each text is translated according to the specified source and target languages. The `.jsonl` file contains all translation requests for batch processing.
+1. **Prepare Input Data**: The script takes a list of dictionaries and creates a `.jsonl` file. Each request is created with `request-id` set as `site_name.key` so that it can be tracked in future. Each content is translated according to the specified source and target languages. The `.jsonl` file contains all translation requests for batch processing.
 2. **Upload Input File**: The prepared `.jsonl` file is uploaded to OpenAI's server.
 3. **Create Batch Job**: A batch job is created using the uploaded file. This job processes all the translation requests asynchronously.
 4. **Check Batch Status**: The script periodically checks the status of the batch job to track when it's completed.
-5. **Retrieve Translated Results**: Once the batch job is completed, the translated sentences are retrieved and printed.
+5. **Retrieve Translated Results**: Once the batch job is completed, the output `.jsonl` files are saved. Then each requests in the `content` field are saved as final output as `request-id.txt` file.
 
 ---
 
