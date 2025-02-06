@@ -1,16 +1,16 @@
 # Batch Translation with OpenAI API
 
-This project uses the **OpenAI Batch API** to translate a list of sentences from one language to another. The workflow involves preparing a `.jsonl` file containing translation requests, uploading the file to OpenAI's servers, and using the Batch API to handle translation asynchronously.
+This project uses the **OpenAI Batch API** to translate ***tpls*** and ***inis*** from one language to another. The workflow involves preparing a `.jsonl` file containing translation requests, uploading the file to OpenAI's servers, and using the **Batch API** to handle translation asynchronously.
 
 ---
 
 ## Workflow Overview
 
-1. **Prepare Input Data**: The script takes a list of dictionaries and creates a `.jsonl` file. Each request is created with `request-id` set as `site_name.key` so that it can be tracked in future. Each content is translated according to the specified source and target languages. The `.jsonl` file contains all translation requests for batch processing.
+1. **Prepare Input Data**: The script takes a ***list of dictionaries*** and creates a `.jsonl` file as input. Each request is created with `request-id` set as ***site_name.key*** (Example: ***rentbyowner.com-file://redirect/redirect.tpl***) so that it can be tracked in future. Each content is translated according to the specified **source language** and **target language**. The `.jsonl` file contains all ***translation requests*** for **batch processing**.
 2. **Upload Input File**: The prepared `.jsonl` file is uploaded to OpenAI's server.
 3. **Create Batch Job**: A batch job is created using the uploaded file. This job processes all the translation requests asynchronously.
 4. **Check Batch Status**: The script periodically checks the status of the batch job to track when it's completed.
-5. **Retrieve Translated Results**: Once the batch job is completed, the output `.jsonl` files are saved. Then each requests in the `content` field are saved as final output as `request-id.txt` file.
+5. **Retrieve Translated Results**: Once the batch job is completed, the **output** `.jsonl` (Example: ***output_batch_67a337076e3c8190ae1af48092425fbc.jsonl***) files are saved. Then each requests in the `content` field of the `.jsonl` file are saved as **final output** as ***request-id.txt*** (Example: ***rentbyowner.com-file://redirect/redirect.tpl.txt***) file.
 
 ---
 
@@ -61,11 +61,11 @@ Open contents in ***results/list*** to access the results. The results are saved
 
 - This table provides a summary of batch processing details, including IDs, durations, and token usage.
 
-| Batch ID | Output File ID | Task            | No. of Requests | Duration (HH:MM:SS)        | Prompt Tokens | Completion Tokens | Total Tokens |
-|----------|----------------|-----------------|-----------------|-----------------|---------------|-------------------|--------------|
-| batch_67a35b88d6548190bdcb2ff989522703  | output_1       | en to es        | 5        | 10:56:36         | 4513           | 4301               | 8414          |
-| batch_67a337076e3c8190ae1af48092425fbc  | output_2       | en to de        | 5        | 14:24:34 | 4513           | 4378               | 8591          |
-| batch_67a35b7efe80819084d38722746c71da  | output_3       | en to fr         | 5        | 10:51:19  | 4513           | 4396               | 7909          |
+| Batch ID | Task            | No. of Requests | Duration (HH:MM:SS)        | Prompt Tokens | Completion Tokens | Total Tokens |
+|----------|-----------------|-----------------|-----------------|---------------|-------------------|--------------|
+| batch_67a35b88d6548190bdcb2ff989522703  | en to es        | 5        | 10:56:36         | 4513           | 4301               | 8414          |
+| batch_67a337076e3c8190ae1af48092425fbc  | en to de        | 5        | 14:24:34 | 4513           | 4378               | 8591          |
+| batch_67a35b7efe80819084d38722746c71da  | en to fr        | 5        | 10:51:19  | 4513           | 4396               | 7909          |
 
 ---
 
