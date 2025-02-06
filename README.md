@@ -47,13 +47,16 @@ python3 main.py
 ```
 
 ### **Access Output**
-Open contents in ***results/list*** to access the results. The results are saved according to `batch_id`s.
+Open contents in ***results/list*** to access the results. The results are saved according to `batch_id`s. Each request is saved with the corresponding `tpl/ini-key.txt` format for future use cases.
 
 ---
 
 ## Batch Process Test Summary
 
-This table provides a summary of batch processing details, including IDs, durations, and token usage.
+- For this test, 3 batches of 5 requests are created.
+- In each request, a **tpl** in converted to English to other language.
+
+- This table provides a summary of batch processing details, including IDs, durations, and token usage.
 
 | Batch ID | Output File ID | Task            | No. of Requests | Duration (HH:MM:SS)        | Prompt Tokens | Completion Tokens | Total Tokens |
 |----------|----------------|-----------------|-----------------|-----------------|---------------|-------------------|--------------|
